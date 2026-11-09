@@ -1,0 +1,58 @@
+# Customer Churn Prediction Configuration
+
+project:
+  name: "Customer Churn Prediction"
+  version: "1.0.0"
+  author: "Sneh Kheni"
+  random_state: 42
+  test_size: 0.20
+  cv_folds: 5
+
+data:
+  raw_file: "Customer_Churn.csv"
+  processed_file: "churn_cleaned.csv"
+  target_column: "Churn"
+  id_column: "customerID"
+
+features:
+  numerical:
+    - SeniorCitizen
+    - tenure
+    - MonthlyCharges
+    - TotalCharges
+  categorical:
+    - gender
+    - Partner
+    - Dependents
+    - PhoneService
+    - MultipleLines
+    - InternetService
+    - OnlineSecurity
+    - OnlineBackup
+    - DeviceProtection
+    - TechSupport
+    - StreamingTV
+    - StreamingMovies
+    - Contract
+    - PaperlessBilling
+    - PaymentMethod
+
+risk_tiers:
+  low_threshold: 0.30
+  high_threshold: 0.60
+  decision_threshold: 0.50
+
+models:
+  baseline:
+    - "Logistic Regression"
+    - "Decision Tree"
+    - "Random Forest"
+    - "KNN"
+    - "Naive Bayes"
+    - "Support Vector Machine"
+  tuned:
+    - "Logistic Regression"
+    - "Decision Tree"
+    - "Random Forest"
+    - "Support Vector Machine"
+
