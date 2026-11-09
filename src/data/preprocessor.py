@@ -47,14 +47,20 @@ def clean_churn_data(df_raw: pd.DataFrame) -> pd.DataFrame:
         logger.info(f"Dropped identifier column '{ID_COLUMN}'.")
 
     # Clean TotalCharges: convert whitespace to numeric
-    if "TotalCharges" in df.columns and df["TotalCharges"].dtype == object:
-        df["TotalCharges"] = pd.to_numeric(df["TotalCharges"].astype(str).str.strip(), errors="coerce")
+    if "TotalCharges" in df.columns:
+        if not pd.api.types.is_numeric_dtype(df["TotalCharges"]):
+            df["TotalCharges"] = pd.to_numeric(df["TotalCharges"].astype(str).str.strip(), errors="coerce")
+        else:
+            df["TotalCharges"] = pd.to_numeric(df["TotalCharges"], errors="coerce")
+
         missing_count = df["TotalCharges"].isna().sum()
         if missing_count > 0:
             logger.info(
                 f"Imputing {missing_count} missing TotalCharges values with 0.0 (tenure=0 customers)."
             )
             df["TotalCharges"] = df["TotalCharges"].fillna(0.0)
+
+        df["TotalCharges"] = df["TotalCharges"].astype(float)
 
     # Verify no nulls remain
     remaining_nulls = df.isna().sum().sum()

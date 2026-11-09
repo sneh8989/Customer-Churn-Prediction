@@ -6,7 +6,7 @@ Combines input validation, preprocessing, probability calculation, and risk tier
 import logging
 from dataclasses import dataclass
 from pathlib import Path
-from typing import Dict, Any, List, Union, Optional
+from typing import Dict, Any, List, Union, Optional, Tuple
 import joblib
 import pandas as pd
 import numpy as np

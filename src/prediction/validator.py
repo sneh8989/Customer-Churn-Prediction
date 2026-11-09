@@ -97,8 +97,10 @@ def validate_customer_input(
     # Process and validate numerical features
     for num_col in NUMERICAL_FEATURES:
         # Convert string representations if necessary
-        if df[num_col].dtype == object:
+        if not pd.api.types.is_numeric_dtype(df[num_col]):
             df[num_col] = pd.to_numeric(df[num_col].astype(str).str.strip(), errors="coerce")
+        else:
+            df[num_col] = pd.to_numeric(df[num_col], errors="coerce")
 
         # Fill TotalCharges if tenure is 0 and TotalCharges is NaN
         if num_col == "TotalCharges":

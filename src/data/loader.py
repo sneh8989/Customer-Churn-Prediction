@@ -143,12 +143,12 @@ def load_train_test_data() -> Tuple[pd.DataFrame, pd.DataFrame, pd.Series, pd.Se
     y_test_raw = pd.read_csv(y_test_path).squeeze()
 
     # Consistently map targets to 0/1
-    if y_train_raw.dtype == object:
+    if not pd.api.types.is_numeric_dtype(y_train_raw):
         y_train = y_train_raw.map({"No": 0, "Yes": 1}).astype(int)
     else:
         y_train = y_train_raw.astype(int)
 
-    if y_test_raw.dtype == object:
+    if not pd.api.types.is_numeric_dtype(y_test_raw):
         y_test = y_test_raw.map({"No": 0, "Yes": 1}).astype(int)
     else:
         y_test = y_test_raw.astype(int)
